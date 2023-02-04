@@ -103,8 +103,11 @@
                         </div>
                     </div>
                     <h5><b>Copy this script for using this popup in your website!</b></h5>
-                    <input type="text" value="{{$script}}" style="width:660px; padding:20px;" disabled>
-                    <a href="{{url('')}}/api/use_popup/{{$popup->key}}">{{$popup->key}}</a>
+                    <span class="label label-info"><b>Source from API</b></span>
+                    <input type="text" value="{{$script1}}" style="width:100%; padding:20px;" disabled>
+                    <br><br><br>
+                    <span class="label label-info mt-3"><b>Source from Generated public file</b></span>
+                    <input type="text" value="{{$script2}}" style="width:100%; padding:20px;" disabled>
                 </div>
             </div>
         </div>

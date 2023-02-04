@@ -19,3 +19,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/use_popup/{key}', [App\Http\Controllers\api\ApiController::class, 'showPopup']);
+Route::post('/add_view', [App\Http\Controllers\api\ApiController::class, 'updateViewsCount'])->name('add-view');

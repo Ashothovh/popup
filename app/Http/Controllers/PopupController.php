@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\File;
 
 class PopupController extends Controller
 {
@@ -54,7 +55,12 @@ class PopupController extends Controller
         $data = $request->except('_token');
         $data['key'] = Str::random(30);
 
-        Popup::create($data);
+        $popup = Popup::create($data);
+        $url = url('').'/api/add_view/';
+        $popup_content = view('popups.popup', compact('popup', 'url'));
+
+        $script = $popup_content;
+        File::put(public_path()."/generated/".$data['key'].".html",$script);
 
         return redirect()->route('popups.index');
     }
@@ -68,8 +74,9 @@ class PopupController extends Controller
     public function show($id)
     {
         $popup  = Popup::find($id);
-        $script = '<script src="'.url('').'/api/use_popup/'.$popup->key.'"></script>';
-        return view('popups.show', compact('popup', 'script'));
+        $script1 = '<iframe src="'.url('').'/api/use_popup/'.$popup->key.'" style="width:100%; height:777px; overflow:hidden; border:none"></iframe>';
+        $script2 = '<iframe src="'.url('').'/generated/'.$popup->key.'.html" style="width:100%; height:777px; overflow:hidden; border:none"></iframe>';
+        return view('popups.show', compact('popup', 'script1', 'script2'));
     }
 
     /**
@@ -139,22 +146,5 @@ class PopupController extends Controller
         }
         return redirect()->route('popups.index');
     }
-
-    // /**
-    //  * Call the popup with current key
-    //  * Showing only active popups
-    //  * Update displayed popup views
-    //  * @param $key
-    //  */
-    // public function showPopup($key){
-    //     $popup  = Popup::where('key', $key)->first();
-    //     // If status is inactive, then returning false and not showing the popup
-    //     if($popup->status==0){
-    //         return false;
-    //     }else{
-    //         // Update Views count for loaded Popups
-    //         $popup->update(['view_count' => $popup->view_count + 1]);
-    //         return view('popups.popup', compact('popup'));
-    //     }
-    // }
+    
 }

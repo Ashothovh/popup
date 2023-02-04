@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-// Route::get('/use_popup/{key}', [App\Http\Controllers\PopupController::class, 'showPopup'])->name('show_popup');
 
 Route::group(['middleware'=>['auth']],function (){
     Route::get('/popup/{id}', [App\Http\Controllers\PopupController::class, 'changeStatus'])->name('change_status');
