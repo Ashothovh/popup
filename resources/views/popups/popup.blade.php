@@ -128,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             }
         });
-    }, 1000);
+    }, 10000);
 
     closeBtn.onclick = function() {
         popup.classList.add("close-popup");
